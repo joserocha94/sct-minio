@@ -1,0 +1,8 @@
+{
+  "#{Signstash.Config.Certificate.Alias}#": {
+    "secret": "#{Signstash.Config.Certificate.Secret}#",
+    "inputFolder": "sign/input",
+    "backupFolder": "sign/backup",
+    "outputFolder": "sign/output"
+  }
+}

@@ -1,0 +1,10 @@
+minio>=7.2.0
+watchdog>=3.0.0
+pip-system-certs
+
+--index-url https://repo.cm-cic.fr/artifactory/api/pypi/internal-pypi-prd/simple/
+--extra-index-url https://repo.cm-cic.fr/artifactory/api/pypi/internal-pypi-uat/simple/
+--extra-index-url https://repo.cm-cic.fr/artifactory/api/pypi/internal-pypi-sit/simple/
+--extra-index-url https://repo.cm-cic.fr/artifactory/api/pypi/internal-pypi-dev/simple/
+--extra-index-url https://repo.cm-cic.fr/artifactory/api/pypi/external-pypi-pypiorg/simple
+--trusted-host repo.cm-cic.fr
