@@ -883,3 +883,71 @@ Este ficheiro foi gerado com base na análise do código-fonte do projeto e nas 
 Se precisares de ajuda adicional ou quiseres personalizar ainda mais a documentação, estou à disposição!
 
 
+------
+
+flowchart TD
+    A[Início (__main__.py)]
+    B[Ler configurações (config.py)]
+    C[Criar cliente MinIO]
+    D[Executar full_sync()]
+    E1[MinIO → Local (input/)]
+    E2[Local → MinIO (output/ e backup/)]
+    F[Verificar MD5 e copiar]
+    G[Apagar ficheiros se DELETE_AFTER_COPY]
+    H[Apagar ficheiros antigos (TTL)]
+    I[Remover diretórios vazios]
+    J{WATCH_MODE ativo?}
+    K1[Esperar intervalo e repetir ciclo]
+    K2[Iniciar monitorização local (watcher.py)]
+    L[Detetar alterações locais e sincronizar]
+    M[Repetir ciclo infinito]
+
+    A --> B --> C --> D
+    D --> E1 --> F
+    D --> E2 --> F
+    F --> G --> H --> I --> J
+    J -->|Não| K1 --> M
+    J -->|Sim| K2 --> L --> M
+
+
+                 [Início (__main__.py)]
+                           |
+                           v
+         [Ler configurações com config.py]
+                           |
+                           v
+     [Criar cliente MinIO com minio_client.py]
+                           |
+                           v
+               [Executar full_sync()]
+                           |
+        +------------------+------------------+
+        |                                     |
+        v                                     v
+ [MinIO → Local (input)]         [Local → MinIO (output/backup)]
+        |                                     |
+        |     (verifica integridade via MD5)  |
+        +------------------+------------------+
+                           |
+                           v
+            [Apagar ficheiros, se ativado]
+                           |
+                           v
+              [Limpar ficheiros antigos]
+                           |
+                           v
+             [Remover diretórios vazios]
+                           |
+                           v
+   [Esperar intervalo / ou iniciar watcher.py]
+                           |
+         +----------------+----------------+
+         |                                 |
+         v                                 v
+ [Aguardar tempo]             [Monitorar alterações locais]
+         |                                 |
+         +----------------+----------------+
+                           |
+                           v
+                [Repetir ciclo infinito]
+
